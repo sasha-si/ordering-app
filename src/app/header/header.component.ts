@@ -6,9 +6,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-
   @Output() recipesClicked = new EventEmitter<boolean>();
   @Output() shoppingListClicked = new EventEmitter<boolean>();
+
+  isOpened = false;
 
   onRecipesClicked(name: boolean) {
     this.recipesClicked.emit(name);
