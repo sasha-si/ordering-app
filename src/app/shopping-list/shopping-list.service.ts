@@ -23,6 +23,6 @@ export class ShoppingListService {
   };
 
   addIngredientsList(newItems: Ingredient[]) {
-    this.ingredients = [...this.ingredients, ...newItems];
+    this.ingredients.push( ...newItems);
   };
 }
