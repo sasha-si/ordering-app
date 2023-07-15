@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 
-import { Ingredient } from '../shared/ingredients.model';
+import { Ingredient } from '../shared/ingredient.interface';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingListService {
 
+  startedEditing = new Subject<number>();
+
   private ingredients: Ingredient[] = [
-    new Ingredient('Apples', 1005),
-    new Ingredient('Tomatoes', 10)
+    {name: 'Apples', amount: 1005},
+    {name: 'Tomatoes', amount: 10},
+    {name: 'Beer', amount: 12}
   ];
 
   constructor() { }
@@ -20,6 +24,10 @@ export class ShoppingListService {
 
   addIngredient(newItem: Ingredient) {
     this.ingredients.push(newItem);
+  };
+
+  editIngredient(newItem: Ingredient, index: number) {
+    this.ingredients[index] = newItem;
   };
 
   addIngredientsList(newItems: Ingredient[]) {

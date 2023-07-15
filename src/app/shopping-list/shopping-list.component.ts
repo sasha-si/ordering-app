@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Ingredient } from '../shared/ingredients.model';
+import { Ingredient } from '../shared/ingredient.interface';
 import { ShoppingListService } from './shopping-list.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class ShoppingListComponent implements OnInit {
     this.ingredients = this.shoppingListService.getIngredients();
   }
 
-  addNewItem(newItem: Ingredient) {
-    this.ingredients.push(newItem);
+  onEditItem(i: number) {
+    this.shoppingListService.startedEditing.next(i)
   };
 }
