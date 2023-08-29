@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { Recipe } from './recipe.interface';
-import { Ingredient } from '../shared/ingredient.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +28,13 @@ export class RecipesService {
         {name: 'Cheese and cream sauce', amount: 120},
         {name: 'Pizza dough', amount: 150},
       ]
+    },
+    {
+      id: 3,
+      name: 'Four-cheese pizza',
+      description: 'Big four-cheese pizza',
+      imagePath: 'https://www.nicepng.com/png/detail/867-8672069_4-cheese-pizza-4-cheese-pizza-png.png',
+      ingredients: []
     }
   ];
 
