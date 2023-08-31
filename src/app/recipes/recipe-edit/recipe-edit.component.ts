@@ -32,25 +32,27 @@ export class RecipeEditComponent implements OnInit {
   }
 
   private initForm() {
-    const { name, imagePath, description, ingredients } = this.recipeService.getRecipes()[this.id - 1];
-    if (this.isEditingMode) {
-      name;
-      imagePath;
-      description;
-      ingredients;
-    } else {
-      null
-    }
+    let name = null;
+    let imagePath = null;
+    let description = null;
+    let ingredients: Ingredient[] = [];
 
+    if (this.isEditingMode) {
+      const recipe = this.recipeService.getRecipes()[this.id - 1];
+      name = recipe.name
+      imagePath = recipe.imagePath
+      description = recipe.description
+      ingredients = recipe.ingredients
+    }
     this.form = this.fb.group({
       'name': [name, [Validators.required, Validators.minLength(3)]],
-      'imagePath': [imagePath, [Validators.required, Validators.min(10)]],
-      'description': [description, [Validators.required, Validators.min(10)]],
+      'imagePath': [imagePath, [Validators.required, Validators.minLength(15)]],
+      'description': [description, [Validators.required, Validators.minLength(10)]],
       'ingredients': this.fb.array(
         ingredients.map((i: Ingredient) => {          
           return this.fb.group({
             'name': [i.name, [Validators.required, Validators.minLength(3)]],
-            'amount': [i.amount, [Validators.required, Validators.minLength(3)]]
+            'amount': [i.amount, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/), Validators.minLength(3)]]
           })
         })
       ),
@@ -65,12 +67,17 @@ export class RecipeEditComponent implements OnInit {
     return this.form.get('ingredients') as FormArray;
   }
 
+  onDeleteIngredient(ind: number) {
+    const ingredientsArr = this.form.controls['ingredients'] as FormArray;
+    ingredientsArr.removeAt(ind)
+  };
+
   onAddIngredient() {
     const ingredientsArr = this.form.controls['ingredients'] as FormArray;
     ingredientsArr.push(
       this.fb.group({
         'name': [null, [Validators.required, Validators.minLength(3)]],
-        'amount': [null, [Validators.required, Validators.minLength(3)]]
+        'amount': [null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/), Validators.minLength(3)]]
       })
     );
   };

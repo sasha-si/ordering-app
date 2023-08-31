@@ -1,11 +1,11 @@
-<p *ngIf="!isEditingMode">Adding a new recipe</p>
-<p *ngIf="isEditingMode">Editing a recipe</p>
+<h2 *ngIf="!isEditingMode">Adding a new recipe</h2>
+<h2 *ngIf="isEditingMode">Editing a recipe</h2>
 <div class="row">
     <div class="col-xs-12">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-xs-12">
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button  [disabled]="form.invalid" type="submit" class="btn btn-success">Save</button>
                     <button type="button" class="btn btn-danger">Cancel</button>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                             <input type="number" class="form-control" formControlName="amount">
                         </div>
                         <div class="col-xs-1">
-                            <button class="btn btn-danger">X</button>
+                            <button class="btn btn-danger" (click)="onDeleteIngredient(i)">X</button>
                         </div>
                     </div>
                     <hr>
