@@ -16,7 +16,7 @@ export class RecipeEditComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
-    private recipeService: RecipesService,
+    private recipesService: RecipesService,
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) { };
@@ -38,7 +38,7 @@ export class RecipeEditComponent implements OnInit {
     let ingredients: Ingredient[] = [];
 
     if (this.isEditingMode) {
-      const recipe = this.recipeService.getRecipes()[this.id - 1];
+      const recipe = this.recipesService.getRecipe(this.id)!;
       name = recipe.name
       imagePath = recipe.imagePath
       description = recipe.description
@@ -60,7 +60,11 @@ export class RecipeEditComponent implements OnInit {
   };
 
   onSubmit() {
-    console.log(this.form);
+    if(this.isEditingMode) {
+      this.recipesService.updateRecipe(this.id, this.form.value);
+    } else {
+      this.recipesService.addRecipe(this.form.value);
+    }
   };
 
   get ingredients() {
