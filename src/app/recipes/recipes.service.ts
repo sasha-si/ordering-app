@@ -52,13 +52,19 @@ export class RecipesService {
   };
 
   addRecipe(recipe: Recipe) {
-    this.recipes.push({...recipe, id: this.recipes[this.recipes.length - 1].id + 1});
+    this.recipes.push({...recipe, id: this.recipes.length === 0 ? 1 : this.recipes[this.recipes.length - 1].id + 1});
     this.recipesChanged.next(this.recipes.slice());
   };
   
   updateRecipe(index: number, newRecipe: Recipe) {
     const recipeIndex = this.recipes.findIndex((el) => el.id === index);
     this.recipes[recipeIndex] = {...newRecipe, id: index};
+    this.recipesChanged.next(this.recipes.slice());
+  };
+
+  deleteRecipe(index: number) {
+    const recipeIndex = this.recipes.findIndex((el) => el.id === index);
+    this.recipes.splice(recipeIndex, 1);
     this.recipesChanged.next(this.recipes.slice());
   };
 }

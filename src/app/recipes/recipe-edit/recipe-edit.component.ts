@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { RecipesService } from '../recipes.service';
 import { Ingredient } from 'src/app/shared/ingredient.interface';
@@ -18,6 +18,7 @@ export class RecipeEditComponent implements OnInit {
   constructor(
     private recipesService: RecipesService,
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder
   ) { };
 
@@ -65,6 +66,7 @@ export class RecipeEditComponent implements OnInit {
     } else {
       this.recipesService.addRecipe(this.form.value);
     }
+    this.onCancel();
   };
 
   get ingredients() {
@@ -84,5 +86,9 @@ export class RecipeEditComponent implements OnInit {
         'amount': [null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/), Validators.minLength(3)]]
       })
     );
+  };
+
+  onCancel() {
+    this.router.navigate(['../'], {relativeTo: this.route})
   };
 }
