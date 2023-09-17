@@ -11,7 +11,7 @@ import { RecipesService } from '../recipes.service';
   styleUrls: ['./recipe-detail.component.scss']
 })
 export class RecipeDetailComponent implements OnInit {
-  recipe!: Recipe;
+  recipe!: Recipe | undefined;
   elId!: number;
 
   constructor(
@@ -25,14 +25,14 @@ export class RecipeDetailComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.elId = +params['id'];
-        this.recipe = this.recipesService.getRecipes()[params['id'] - 1]
-        // this.recipe = this.recipesService.getRecipe(params['id']) To enhance
+        // this.recipe = this.recipesService.getRecipes().find((el) => el.id === params['id'])!;
+        this.recipe = this.recipesService.getRecipe(+params['id']);
       }
     );
   }
 
   onAddToShopList() {
-    this.shoppingListService.addIngredientsList(this.recipe.ingredients);
+    this.shoppingListService.addIngredientsList(this.recipe!.ingredients);
   };
 
   onDeleteRecipe() {
