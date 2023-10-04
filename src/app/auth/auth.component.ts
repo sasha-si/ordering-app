@@ -10,6 +10,8 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent implements OnInit {
   isSignedUpMode = true;
+  isLoading = false;
+  error: string | null = null;
   form!: FormGroup;
 
   constructor(private fb: FormBuilder, private auth: AuthService) { };
@@ -30,6 +32,8 @@ export class AuthComponent implements OnInit {
       return;
     }
     const { email, password } = this.form.value
+    
+    this.isLoading = true;
 
     if (this.isSignedUpMode) {
       //...
@@ -38,9 +42,12 @@ export class AuthComponent implements OnInit {
         {
           next: (data) => {
             console.log(data);
+            this.isLoading = false;
           },
           error: (err) => {
             console.log(err);
+            this.error = 'An error occured!';
+            this.isLoading = false;
           }
         }
       )
