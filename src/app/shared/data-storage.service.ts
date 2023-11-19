@@ -23,19 +23,17 @@ export class DataStorageService {
       'https://ordering-app-e5a5a-default-rtdb.firebaseio.com/recipes.json',
       recipes
     )
-      .subscribe(res => {
-        console.log(res);
-      });
+    .subscribe(res => {
+      console.log(res);
+    });
   }
 
   fetchRecipes() {
-    return this.authService.user.pipe(
-      take(1),
-      exhaustMap(user => {
-        return this.http.get<Recipe[]>(
-          'https://ordering-app-e5a5a-default-rtdb.firebaseio.com/recipes.json?auth=' + user!.token
-        );
-      }),
+
+    return this.http.get<Recipe[]>(
+      'https://ordering-app-e5a5a-default-rtdb.firebaseio.com/recipes.json'
+    )
+    .pipe(
       map(recipes => {
         return recipes.map(recipe => {
           return { ...recipe, ingredients: recipe.ingredients ? recipe.ingredients : [] }
