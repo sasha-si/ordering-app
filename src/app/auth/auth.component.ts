@@ -48,20 +48,15 @@ export class AuthComponent implements OnInit {
     authObs.subscribe(
       {
         next: (resData) => {
-          console.log(resData);
-          
           this.isLoading = false;
           this.router.navigate(['/recipes'])
         },
         error: (errorRes) => {
-          console.log(errorRes);
-          
           this.error = errorRes;
           this.isLoading = false;
         }
       }
     )
-
     this.form.reset();
   };
 }
